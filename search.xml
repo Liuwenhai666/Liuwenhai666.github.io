@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>数据结构-十四周周一最小生成树</title>
+      <link href="/2023/11/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%8D%81%E5%9B%9B%E5%91%A8%E5%91%A8%E4%B8%80%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/"/>
+      <url>/2023/11/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%8D%81%E5%9B%9B%E5%91%A8%E5%91%A8%E4%B8%80%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</url>
+      
+        <content type="html"><![CDATA[<h1 id="7-3图的遍历"><a href="#7-3图的遍历" class="headerlink" title="7.3图的遍历"></a>7.3图的遍历</h1><h2 id="3-求图的连通分量"><a href="#3-求图的连通分量" class="headerlink" title="3.求图的连通分量"></a>3.求图的连通分量</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Count_Component</span><span class="params">(AdjList g)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> count;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> v = <span class="number">1</span>; v &lt;= g.vexnum; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        visited[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(v = <span class="number">1</span>; v &lt;= g.vexnum; v++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(vistied[i] == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            count ++;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;连通分量d%包含一下顶点:&quot;</span>, count);</span><br><span class="line">           dfs(g, v);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;/n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;共有%d个两连通分量&quot;</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="7-4最小生成树和最短路径"><a href="#7-4最小生成树和最短路径" class="headerlink" title="7.4最小生成树和最短路径"></a>7.4最小生成树和最短路径</h1><h2 id="1-最小生成树"><a href="#1-最小生成树" class="headerlink" title="1.最小生成树"></a>1.最小生成树</h2><p>带权连通图中，总的权值之和最小的带权生成树是最小生成树。也叫最小代价生成树、最小花费生成树</p><blockquote><p>Kruskal算法：</p><ol><li><p>设 T 的初始状态为空寂</p></li><li><p>当 T 中边数小于 n-1 时，做一下工作</p></li></ol><p>  （1）从 E 中选择权值最小的边（v, w），并删除</p><p>  （2）所（v, w）不与 T 中的边一起构成回路，就把边（v, w）加入 T 中去</p></blockquote><h3 id="判断-T-中-边是否构成回路"><a href="#判断-T-中-边是否构成回路" class="headerlink" title="判断 T 中 边是否构成回路"></a>判断 T 中 边是否构成回路</h3><p>（1）并查集（分类）：</p><p>&lt;并&gt;：如果两个集合中两个元素有关系，就进行<strong>并</strong>预算<br>&lt;查&gt;：查找给出的元素是哪个集合的</p><p>判断是否出回路：判断 v，w是否属于同一集合，如果是同一集合就能构成回路</p><p>（2）DFS：判断从 v 是否能到 w，如果能到就能构成回路</p><blockquote><p>Prim算法：</p><ol><li><p>设 V(T) 的出台为空集（V(T)为落在生成树上的顶点集合）</p></li><li><p>在连通图中人选一顶点加入 V(T) 集合中去</p></li><li><p>将下列的步骤重复 n-1 次</p><p>（1）在 i 属于 V(T) ， j 不属于 V(T) 的边中，选择权值最小的便 （i，j）</p><p>（2）将 j 加入到 V(T) 里面去</p><p>（3）输出 i，j 以及 $W_ij$</p></li></ol></blockquote><h2 id="2-最短路径问题"><a href="#2-最短路径问题" class="headerlink" title="2.最短路径问题"></a>2.最短路径问题</h2><h3 id="（1）单源最短路径"><a href="#（1）单源最短路径" class="headerlink" title="（1）单源最短路径"></a>（1）单源最短路径</h3><p>求从 $v_0$ ~ $v_j$ 的最短路径的话，从 $v_0$ 到中间任意结点都是最短路径</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 课堂笔记 </category>
+          
+          <category> 数据结构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 小杜的 </tag>
+            
+            <tag> 课堂笔记 </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据结构--邻接表</title>
       <link href="/2023/11/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%82%BB%E6%8E%A5%E8%A1%A8/"/>
       <url>/2023/11/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%82%BB%E6%8E%A5%E8%A1%A8/</url>
@@ -197,9 +228,9 @@
     
     
     <entry>
-      <title>标签</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>友情链接</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -208,9 +239,9 @@
     
     
     <entry>
-      <title>友情链接</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>标签</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
