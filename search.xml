@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>VHDL加法器准备</title>
+      <link href="/2023/12/02/VHDL%E5%8A%A0%E6%B3%95%E5%99%A8%E5%87%86%E5%A4%87/"/>
+      <url>/2023/12/02/VHDL%E5%8A%A0%E6%B3%95%E5%99%A8%E5%87%86%E5%A4%87/</url>
+      
+        <content type="html"><![CDATA[<h1 id="chapter2-布尔函数的逻辑实现">chapter2 布尔函数的逻辑实现</h1><h2 id="节-数字电路的-vhdl-描述">2.3节 数字电路的 VHDl 描述</h2><h3 id="vhdl程序的基本结构">2. VHDL程序的基本结构</h3><p>（1）实体（ENTITY）</p><ul><li>设计单元的外部特征（输入、输出信号）</li><li>对应于原理图中的电路符号</li></ul><p>（2）结构体（ARCHITECTURE）</p><ul><li>输入输出信号的逻辑关系</li><li>对应于电路的内部结构</li></ul><p>（3）库（LIBRARY）</p><ul><li>库中保存了已编译的可用资源，可以为任何设计者共享</li></ul><p>（4）包集合</p><ul><li>存放可以为同一系统所有实体共享的数据类型、常量、子程序的集合</li></ul><p>（5）配置（CONFIGUARTION）</p><ul><li>一个实体可以有多个结构体实现版本</li><li>配置是在实例化具有多个结构体实现版本的实体时，选择其一作为实实际应用的结构体</li></ul><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/001.png"alt="001" /><figcaption aria-hidden="true">001</figcaption></figure><ol type="1"><li>实体（ENTITY）：外部特征描述</li></ol><blockquote><p>语法格式</p><p>ENTITY 实体名 IS [GENERUIC(类属表)]; [PORT(端口表)]; END [ENTITY]实体名；</p></blockquote><ol start="2" type="1"><li>结构体（Architecture）：内部功能描述</li></ol><blockquote><p>语法格式</p><p>ARCHITECTURE 结构体名 OF 实体名 IS [结构体说明部分] BEGIN[并发处理语句]; END 结构体名;</p></blockquote><p>（1）结构体说明部分</p><ul><li>用于说明结构体的功能描述语句中将要用到的内容<ul><li>信号：singal</li><li>数据类型：type</li><li>常数：constant</li><li>元件：componment</li><li>函数：function</li><li>过程：procedure</li></ul></li><li>结构体中说明和定义的内容只能用于这个结构体中</li><li>若希望其能应用于其他的实体或者结构体中，则需要将其作为程序包来处理</li></ul><ol start="3" type="1"><li>配置（Configuration）</li></ol><blockquote><p>语法格式</p><p>For 例化元件标号表: 元件名 use entity 实体名(结构体名) [genericmap(参数关联表)]; [port map(端口关联表)];</p></blockquote><h3 id="vhdl的基本语言元素">3.VHDL的基本语言元素</h3><ol type="1"><li><p>标识符</p></li><li><p>数据对象</p><p>（1）常量：constant</p><p>（2）变量：variable</p><p>（3）信号：signal</p><p>（4）信号和变量的区别：</p><table><thead><tr class="header"><th>信号</th><th>变量</th></tr></thead><tbody><tr class="odd"><td>全局量</td><td>暂存数据的单元</td></tr><tr class="even"><td>有延迟</td><td>局部量</td></tr><tr class="odd"><td>&lt;= 赋值</td><td>不允许有延迟</td></tr><tr class="even"><td></td><td>:= 赋值</td></tr></tbody></table></li><li><p>数据类型</p><p>（1）标准数据类型</p><table><colgroup><col style="width: 22%" /><col style="width: 25%" /><col style="width: 52%" /></colgroup><thead><tr class="header"><th>数据类型</th><th>关键字</th><th>取值范围</th></tr></thead><tbody><tr class="odd"><td>整数</td><td>integer</td><td>整数32位</td></tr><tr class="even"><td>实数</td><td>real</td><td>浮点数、</td></tr><tr class="odd"><td>位</td><td>bit</td><td>逻辑1或者0</td></tr><tr class="even"><td>位矢量</td><td>bit vector</td><td>用双引号括起来的一组数据</td></tr><tr class="odd"><td>布尔量</td><td>boolean</td><td>逻辑真或者逻辑假，用True或者Flase</td></tr><tr class="even"><td>字符</td><td>character</td><td>ASCII字符</td></tr><tr class="odd"><td>字符串</td><td>string</td><td>字符矢量</td></tr><tr class="even"><td>时间</td><td>time</td><td>时间单位fs、ps、ns……</td></tr><tr class="odd"><td>自然数、正整数</td><td>Natural Positive</td><td>整数的子集</td></tr><tr class="even"><td>错误等级</td><td>Severity_Level</td><td>note、warning、error、failure</td></tr></tbody></table></li></ol><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/002.png"alt="002" /><figcaption aria-hidden="true">002</figcaption></figure><ol start="4" type="1"><li><p>运算符与操作符</p><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/003.png"alt="003" /><figcaption aria-hidden="true">003</figcaption></figure></li><li><p>属性</p><ul><li>VHDL语言位用户提供了多种能反映和影响硬件行为的属性</li><li>包括设计实体、结构体、类型、信号等项目的指定属性</li><li>属性相当于为获取硬件设计中的一些有关信息而定义的内部函数</li><li>信号属性在检测信号变化和建立详细的时域模型时非常重要</li><li>VHDL属性可以分为：<ul><li>数值类</li><li>函数类</li><li>信号类</li><li>类型类</li><li>范围类</li></ul></li></ul><p>（1）数值类属性：</p><ul><li><p>用于返回数组、块或者一般数据的有关值，如边界、数组长度</p><p>1》Object'left：返回一个数组类型或者子类型最左边的值</p><p>2》Object'right：返回一个数组类型或者子类型最右边的值</p><p>3》Object'high：返回一个数组类型或者子类型的最大值</p><p>4》Object'low：返回一个数组类型或者子类型的最小值</p><p>5》Object'length：返回数组的长度值</p></li></ul><p>（2）函数类属性</p><ul><li><p>属性以函数的形式返回有关数据类型、数组、信号的相关信息</p></li><li><p>函数类属性分三类：</p><ul><li>数据类型属性函数</li><li>数组类型属性函数</li><li>信号属性函数</li></ul><p>1》数据类型属性函数函数</p><ol type="1"><li>Object'succ(X)：获取X的下一个值</li><li>Object'pred(X)： 获取X的前一个值</li><li>Object'leftof(X)：获取X的左边值</li><li>Object'rightof(X)：获取X的右边值</li></ol><p>2》数组的类型函数</p><ol type="1"><li>Object'left(n) ：获取索引号为 n 的区间的左端边界值</li><li>Object'right(n)：获取索引号为 n 的区间的右边边界值</li><li>Object'low(n)：获取索引号为 n 的区间的高端边界值</li><li>Object'low(n)：获取索引号为 n 的区间的低端边界值</li></ol><p>3》信号的属性函数</p><ol type="1"><li>Object'event：信号的值是否发生变化，如果是，则返回 真</li><li>Object'active：信号是否活跃，如果是，就返回 真</li><li>Object'last_event：从最近一次事件到现在经过的时间，返回时间值</li><li>Object'last_value：信号变化前的取值，并将该历史值返回</li><li>Object'last_active：从最近一次活跃，到现在，经过的时间，返回时间值</li></ol></li></ul></li></ol><h3 id="vhdl的顺序语句">4.VHDL的顺序语句</h3><ul><li>在 VHDL 语言中顺序描述语句有以下几种：<ol type="1"><li>信号代入语句 &lt;=</li><li>变量赋值语句 :&lt;</li><li>wait</li><li>if</li><li>case</li><li>loop</li><li>next</li><li>exit</li><li>return</li><li>null</li></ol></li></ul><h3 id="vhdl的描述实例">8.VHDL的描述实例</h3><p>​</p><p>​</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 花自向阳开 </category>
+          
+          <category> VHDL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 花自向阳开 </tag>
+            
+            <tag> 小杜的 </tag>
+            
+            <tag> VHDL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>联邦学习入门-01(Communication-Efficient Learning of Deep Networks from Decentralized Data)</title>
       <link href="/2023/11/30/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8-01/"/>
       <url>/2023/11/30/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8-01/</url>
@@ -246,37 +277,6 @@
             <tag> 小杜的 </tag>
             
             <tag> markdown </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>VHDL加法器准备</title>
-      <link href="/2023/10/25/VHDL%E5%8A%A0%E6%B3%95%E5%99%A8%E5%87%86%E5%A4%87/"/>
-      <url>/2023/10/25/VHDL%E5%8A%A0%E6%B3%95%E5%99%A8%E5%87%86%E5%A4%87/</url>
-      
-        <content type="html"><![CDATA[<h1 id="chapter2-布尔函数的逻辑实现">chapter2 布尔函数的逻辑实现</h1><h2 id="节-数字电路的-vhdl-描述">2.3节 数字电路的 VHDl 描述</h2><h3 id="vhdl程序的基本结构">2. VHDL程序的基本结构</h3><p>（1）实体（ENTITY）</p><ul><li>设计单元的外部特征（输入、输出信号）</li><li>对应于原理图中的电路符号</li></ul><p>（2）结构体（ARCHITECTURE）</p><ul><li>输入输出信号的逻辑关系</li><li>对应于电路的内部结构</li></ul><p>（3）库（LIBRARY）</p><ul><li>库中保存了已编译的可用资源，可以为任何设计者共享</li></ul><p>（4）包集合</p><ul><li>存放可以为同一系统所有实体共享的数据类型、常量、子程序的集合</li></ul><p>（5）配置（CONFIGUARTION）</p><ul><li>一个实体可以有多个结构体实现版本</li><li>配置是在实例化具有多个结构体实现版本的实体时，选择其一作为实实际应用的结构体</li></ul><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/001.png"alt="001" /><figcaption aria-hidden="true">001</figcaption></figure><ol type="1"><li>实体（ENTITY）：外部特征描述</li></ol><blockquote><p>语法格式</p><p>ENTITY 实体名 IS [GENERUIC(类属表)]; [PORT(端口表)]; END [ENTITY]实体名；</p></blockquote><ol start="2" type="1"><li>结构体（Architecture）：内部功能描述</li></ol><blockquote><p>语法格式</p><p>ARCHITECTURE 结构体名 OF 实体名 IS [结构体说明部分] BEGIN[并发处理语句]; END 结构体名;</p></blockquote><p>（1）结构体说明部分</p><ul><li>用于说明结构体的功能描述语句中将要用到的内容<ul><li>信号：singal</li><li>数据类型：type</li><li>常数：constant</li><li>元件：componment</li><li>函数：function</li><li>过程：procedure</li></ul></li><li>结构体中说明和定义的内容只能用于这个结构体中</li><li>若希望其能应用于其他的实体或者结构体中，则需要将其作为程序包来处理</li></ul><ol start="3" type="1"><li>配置（Configuration）</li></ol><blockquote><p>语法格式</p><p>For 例化元件标号表: 元件名 use entity 实体名(结构体名) [genericmap(参数关联表)]; [port map(端口关联表)];</p></blockquote><h3 id="vhdl的基本语言元素">3.VHDL的基本语言元素</h3><ol type="1"><li><p>标识符</p></li><li><p>数据对象</p><p>（1）常量：constant</p><p>（2）变量：variable</p><p>（3）信号：signal</p><p>（4）信号和变量的区别：</p><table><thead><tr class="header"><th>信号</th><th>变量</th></tr></thead><tbody><tr class="odd"><td>全局量</td><td>暂存数据的单元</td></tr><tr class="even"><td>有延迟</td><td>局部量</td></tr><tr class="odd"><td>&lt;= 赋值</td><td>不允许有延迟</td></tr><tr class="even"><td></td><td>:= 赋值</td></tr></tbody></table></li><li><p>数据类型</p><p>（1）标准数据类型</p><table><colgroup><col style="width: 22%" /><col style="width: 25%" /><col style="width: 52%" /></colgroup><thead><tr class="header"><th>数据类型</th><th>关键字</th><th>取值范围</th></tr></thead><tbody><tr class="odd"><td>整数</td><td>integer</td><td>整数32位</td></tr><tr class="even"><td>实数</td><td>real</td><td>浮点数、</td></tr><tr class="odd"><td>位</td><td>bit</td><td>逻辑1或者0</td></tr><tr class="even"><td>位矢量</td><td>bit vector</td><td>用双引号括起来的一组数据</td></tr><tr class="odd"><td>布尔量</td><td>boolean</td><td>逻辑真或者逻辑假，用True或者Flase</td></tr><tr class="even"><td>字符</td><td>character</td><td>ASCII字符</td></tr><tr class="odd"><td>字符串</td><td>string</td><td>字符矢量</td></tr><tr class="even"><td>时间</td><td>time</td><td>时间单位fs、ps、ns……</td></tr><tr class="odd"><td>自然数、正整数</td><td>Natural Positive</td><td>整数的子集</td></tr><tr class="even"><td>错误等级</td><td>Severity_Level</td><td>note、warning、error、failure</td></tr></tbody></table></li></ol><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/002.png"alt="002" /><figcaption aria-hidden="true">002</figcaption></figure><ol start="4" type="1"><li><p>运算符与操作符</p><figure><imgsrc="https://blog-1313503696.cos.ap-nanjing.myqcloud.com/blog/003.png"alt="003" /><figcaption aria-hidden="true">003</figcaption></figure></li><li><p>属性</p><ul><li>VHDL语言位用户提供了多种能反映和影响硬件行为的属性</li><li>包括设计实体、结构体、类型、信号等项目的指定属性</li><li>属性相当于为获取硬件设计中的一些有关信息而定义的内部函数</li><li>信号属性在检测信号变化和建立详细的时域模型时非常重要</li><li>VHDL属性可以分为：<ul><li>数值类</li><li>函数类</li><li>信号类</li><li>类型类</li><li>范围类</li></ul></li></ul><p>（1）数值类属性：</p><ul><li><p>用于返回数组、块或者一般数据的有关值，如边界、数组长度</p><p>1》Object'left：返回一个数组类型或者子类型最左边的值</p><p>2》Object'right：返回一个数组类型或者子类型最右边的值</p><p>3》Object'high：返回一个数组类型或者子类型的最大值</p><p>4》Object'low：返回一个数组类型或者子类型的最小值</p><p>5》Object'length：返回数组的长度值</p></li></ul><p>（2）函数类属性</p><ul><li><p>属性以函数的形式返回有关数据类型、数组、信号的相关信息</p></li><li><p>函数类属性分三类：</p><ul><li>数据类型属性函数</li><li>数组类型属性函数</li><li>信号属性函数</li></ul><p>1》数据类型属性函数函数</p><ol type="1"><li>Object'succ(X)：获取X的下一个值</li><li>Object'pred(X)： 获取X的前一个值</li><li>Object'leftof(X)：获取X的左边值</li><li>Object'rightof(X)：获取X的右边值</li></ol><p>2》数组的类型函数</p><ol type="1"><li>Object'left(n) ：获取索引号为 n 的区间的左端边界值</li><li>Object'right(n)：获取索引号为 n 的区间的右边边界值</li><li>Object'low(n)：获取索引号为 n 的区间的高端边界值</li><li>Object'low(n)：获取索引号为 n 的区间的低端边界值</li></ol><p>3》信号的属性函数</p><ol type="1"><li>Object'event：信号的值是否发生变化，如果是，则返回 真</li><li>Object'active：信号是否活跃，如果是，就返回 真</li><li>Object'last_event：从最近一次事件到现在经过的时间，返回时间值</li><li>Object'last_value：信号变化前的取值，并将该历史值返回</li><li>Object'last_active：从最近一次活跃，到现在，经过的时间，返回时间值</li></ol></li></ul></li></ol><h3 id="vhdl的顺序语句">4.VHDL的顺序语句</h3><ul><li>在 VHDL 语言中顺序描述语句有以下几种：<ol type="1"><li>信号代入语句 &lt;=</li><li>变量赋值语句 :&lt;</li><li>wait</li><li>if</li><li>case</li><li>loop</li><li>next</li><li>exit</li><li>return</li><li>null</li></ol></li></ul><h3 id="vhdl的描述实例">8.VHDL的描述实例</h3><p>​</p><p>​</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 花自向阳开 </category>
-          
-          <category> VHDL </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 花自向阳开 </tag>
-            
-            <tag> 小杜的 </tag>
-            
-            <tag> VHDL </tag>
             
         </tags>
       
